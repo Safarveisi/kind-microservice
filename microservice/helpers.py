@@ -4,13 +4,18 @@ from typing import Iterator, Tuple
 import subprocess
 import signal
 
+import yaml
+
 import pandas as pd
 from prophet import Prophet
 
 import mlflow
 from mlflow.tracking import MlflowClient
 
-S3_PATH = 's3://customerintelligence/advanced-analytics/microservice/'
+import config_module as cfg
+
+
+cfg.set(os.path.join(os.path.dirname(__file__), 'config.yaml'))
 
 def create_forecast_index(begin_date: str = None, end_date: str = None) -> pd.DataFrame:
     
@@ -41,10 +46,14 @@ class MlflowHandler:
         # Start the mlflow server in the background
         command = [
             "mlflow", "server",
-            "--backend-store-uri", "sqlite:///mlflow.db",
-            "--default-artifact-root", S3_PATH,
-            "--host", "0.0.0.0",
-            "--port", "5001"
+            "--backend-store-uri", 
+                cfg.settings['mlflow']['backend_store'],
+            "--default-artifact-root",
+                 cfg.settings['mlflow']['artifactory_location'],
+            "--host",
+                 "0.0.0.0",
+            "--port",
+                 "5001"
         ]
 
         self.process = subprocess.Popen(command, 

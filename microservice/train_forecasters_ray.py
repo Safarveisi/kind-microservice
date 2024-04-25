@@ -5,7 +5,7 @@ import time
 
 import helpers
 
-import yaml
+import config_module as cfg
 
 import ray
 import ray.data
@@ -18,9 +18,7 @@ from mlflow.client import MlflowClient
 
 from prophet import Prophet
 
-# Get the config for the training stage
-with open('./config.yaml', 'r') as f:
-    config = yaml.safe_load(f)
+cfg.set(os.path.join(os.path.dirname(__file__), 'config.yaml'))
 
 def prep_store_data(
     df: pd.DataFrame, 
@@ -81,7 +79,7 @@ def log_to_mlflow(
 
     helpers.log_stores_artifacts_and_metadata(
         zip(ray_results['model'], ray_results['rmse'], ray_results['store_id']),
-        config['threshold']['rmse']
+        cfg.settings['threshold']['rmse']
     )
 
 if __name__ == '__main__':
