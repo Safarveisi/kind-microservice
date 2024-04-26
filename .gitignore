@@ -3,3 +3,4 @@ mlflow_local/
 data/
 *.ipynb
 *.db
+*.json

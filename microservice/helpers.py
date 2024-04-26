@@ -14,7 +14,7 @@ from mlflow.tracking import MlflowClient
 
 import config_module as cfg
 
-
+# Read the config file for the web application
 cfg.set(os.path.join(os.path.dirname(__file__), 'config.yaml'))
 
 def create_forecast_index(begin_date: str = None, end_date: str = None) -> pd.DataFrame:

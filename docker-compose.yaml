@@ -1,0 +1,12 @@
+services:
+  forecast:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      MLFLOW_S3_PASSWORD_FILE: /run/secrets/mlflow_s3_password
+    secrets:
+      - mlflow_s3_password
+secrets:
+  mlflow_s3_password:
+    file: credentials.json

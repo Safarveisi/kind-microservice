@@ -1,3 +1,5 @@
+import os
+import json
 import logging
 from typing import List
 
@@ -10,6 +12,14 @@ from helpers import MlflowHandler, create_forecast_index
 log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s' 
 logging.basicConfig(format = log_format, level = logging.INFO)
 
+# Add the following environment variables
+credentials_file_path = os.environ.get('MLFLOW_S3_PASSWORD_FILE')
+
+with open(credentials_file_path, 'r') as file:
+    s3_credentials = json.load(file)
+# Setting environment variables to S3 artifactory
+for env, value in s3_credentials.items():
+    os.environ[env] = value
 
 handlers = {}
 models = {}
@@ -84,10 +94,8 @@ async def return_foreast(forecast_request: List[Forecastrequest]):
 
 if __name__ == '__main__':
     
-    import subprocess
     import uvicorn
     import time
-    import os
     
     time.sleep(4)
 
