@@ -1,6 +1,6 @@
 services:
   forecast:
-    build: .
+    image: ciaa/forecast-service:v0.1.0
     ports:
       - "8000:8000"
     environment:

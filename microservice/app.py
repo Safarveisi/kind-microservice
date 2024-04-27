@@ -9,8 +9,8 @@ from pydantic import BaseModel
 
 from helpers import MlflowHandler, create_forecast_index
 
-log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s' 
-logging.basicConfig(format = log_format, level = logging.INFO)
+log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+logging.basicConfig(format=log_format, level=logging.INFO)
 
 # Add the following environment variables
 credentials_file_path = os.environ.get('MLFLOW_S3_PASSWORD_FILE')
@@ -25,10 +25,12 @@ handlers = {}
 models = {}
 MODEL_BASE_NAME = f'prophet-retail-forecaster-store-'
 
+
 class Forecastrequest(BaseModel):
     store_id: str
     begin_date: str | None
     end_date: str | None
+
 
 async def get_service_handlers():
     mlflow_handler = MlflowHandler()
@@ -38,6 +40,7 @@ async def get_service_handlers():
     logging.info('Retrieving mlflow handler {}'.format(mlflow_handler))
     handlers['mlflow'].start_server()
     logging.info('Started Mlflow server')
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -52,6 +55,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+
 @app.get('/health/', status_code=200)
 async def healthcheck():
     global handlers
@@ -61,13 +65,16 @@ async def healthcheck():
         'modelTrackingHealth': handlers['mlflow'].check_mlflow_health()
     }
 
+
 async def get_model(store_id: str):
     global handlers
     global models
     model_name = MODEL_BASE_NAME + store_id
     if model_name not in models:
-        models[model_name] = handlers['mlflow'].get_production_model(store_id=store_id)
+        models[model_name] = handlers['mlflow'].get_production_model(
+            store_id=store_id)
     return models[model_name]
+
 
 @app.post('/forecast/', status_code=200)
 async def return_foreast(forecast_request: List[Forecastrequest]):
@@ -85,7 +92,7 @@ async def return_foreast(forecast_request: List[Forecastrequest]):
                 end_date=item.end_date
             )
             model_prediction = model.predict(forecast_input)[['ds', 'yhat']]\
-            .rename(columns={'ds': 'timestamp', 'yhat': 'value'})
+                .rename(columns={'ds': 'timestamp', 'yhat': 'value'})
             model_prediction['value'] = model_prediction['value'].astype(int)
             forecast_result['forecast'] = model_prediction.to_dict('records')
         forecasts.append(forecast_result)
@@ -93,10 +100,11 @@ async def return_foreast(forecast_request: List[Forecastrequest]):
 
 
 if __name__ == '__main__':
-    
+
     import uvicorn
     import time
-    
+
+    # Wait a few seconds to make sure the mlflow instance is running
     time.sleep(4)
 
     # Start the web application

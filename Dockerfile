@@ -10,7 +10,7 @@ RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 FROM python:3.10-slim
 
-ENV user=ssafarveisi
+ENV user=developer
 
 RUN useradd -m -d /home/${user} ${user} && \
     chown -R ${user} /home/${user}
