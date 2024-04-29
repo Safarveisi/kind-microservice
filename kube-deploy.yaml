@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: fast-api
-          image: ciaa/forecast-service:v0.1.0
+          image: ciaa/forecast-service:latest
           resources:
             limits:
               memory: "1000Mi"
