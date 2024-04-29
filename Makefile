@@ -31,4 +31,4 @@ clean-kube:
 clean:
 	@rm -f deployed clean-kube build-image
 
-.PHONY: print-watch kube-config clean
+.PHONY: kube-config clean help
