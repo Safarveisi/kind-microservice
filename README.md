@@ -8,7 +8,7 @@ Train 1115 different Prophet models using a kaggle dataset. To get the dataset, 
 python package. 
 
 ## Experiment tracking and model registery
-Use a local Mlflow server for experiment tracking purposes and as a model registery. A s3 backet is 
+Use a local Mlflow server for experiment tracking purposes and as a model registery. A s3 back-end is 
 used as for the artifactory location. The metadata of each experiment is saved in a local 
 Sqlit db.  
 
