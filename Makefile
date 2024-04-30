@@ -48,4 +48,19 @@ $(COMMIT_DIR):
 		echo "Directory already exists: $@"; \
 	fi
 
-.PHONY: kube-config clean help clean-docker-commit clean-kube-commit
+setup-env:
+	@VENV=$$(poetry env info -p); \
+	rm -rf $$VENV; \
+	pyenv install --skip-existing; \
+	PYTHON_VERSION=$$(pyenv version-name); \
+	echo "Required python version is $$PYTHON_VERSION"; \
+	echo "Setting the env to $(HOME)/.pyenv/versions/$$PYTHON_VERSION/bin/python"; \
+	poetry env use $(HOME)/.pyenv/versions/$$PYTHON_VERSION/bin/python; \
+	poetry config --local virtualenvs.in-project true; \
+	poetry install
+
+update-env:
+	@read -p "Enter the package to add: " package; \
+	poetry add $$package
+
+.PHONY: update-env setup-env kube-config clean help clean-docker-commit clean-kube-commit
