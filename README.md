@@ -15,6 +15,6 @@ Sqlit db.
 ## Serve
 Download the registered Prophet models (for each store id) on Mlflow and make predictions
 for the requested store id and the time range. The inference system runs on a kind kubernetes
-cluster to make the application scalable through a load balancer (ingress). 
+cluster to make the application scalable. An Ingress service is used as for the load balancer and a way to communicate with the inference service from outside of the cluster. The application code resides in a docker image (see `Dockerfile`) deployed into the Kubernetes cluster (see `kube-deploy.yaml`). 
 
 ## Train and inference system
