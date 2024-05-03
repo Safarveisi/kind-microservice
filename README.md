@@ -14,3 +14,6 @@ Use a remote Mlflow server for experiment tracking purposes and as a model regis
 Download the registered Prophet models (for each store id) from the Mlflow artifactory location 
 and make predictions for the requested store id and the time range. The inference system runs on a kind kubernetes
 cluster to make the application scalable. An Ingress service is used as for the load balancer and a way to communicate with the inference service from outside of the cluster. The application code resides in a docker image (see `Dockerfile`) deployed into the Kubernetes cluster (see `kube-deploy.yaml`). 
+
+## System
+![ezcv logo](https://github.com/Safarveisi/microservice/blob/master/comps.png)
