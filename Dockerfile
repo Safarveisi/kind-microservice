@@ -19,7 +19,6 @@ USER ${user}
 WORKDIR /home/${user}
 
 ENV PATH=/home/${user}/.local/bin:$PATH
-ENV MLFLOW_TRACKING_URI=http://0.0.0.0:5001
 ENV RAY_DEDUP_LOGS=0
 
 COPY --from=requirements-stage /tmp/ .

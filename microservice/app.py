@@ -12,25 +12,29 @@ from helpers import MlflowHandler, create_forecast_index
 log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 logging.basicConfig(format=log_format, level=logging.INFO)
 
-# Add the following environment variables
-credentials_file_path = os.environ.get('MLFLOW_S3_PASSWORD_FILE')
+'''
+Define some environment variables (e.g., MLFLOW_TRACKING_URI and AWS_ACCESS_KEY_ID)
+using a json file with its path stored in MLFLOW_REQUIRED_ENVS environment variable
+'''
+credentials_file_path = os.environ.get('MLFLOW_REQUIRED_ENVS')
 
 with open(credentials_file_path, 'r') as file:
     s3_credentials = json.load(file)
+
+print('Env variables to register: ', s3_credentials)
+
 # Setting environment variables to S3 artifactory
 for env, value in s3_credentials.items():
     os.environ[env] = value
 
 handlers = {}
 models = {}
-MODEL_BASE_NAME = f'prophet-retail-forecaster-store-'
-
+MODEL_BASE_NAME = f'prophet-forecaster-store-'
 
 class Forecastrequest(BaseModel):
     store_id: str
     begin_date: str | None
     end_date: str | None
-
 
 async def get_service_handlers():
     mlflow_handler = MlflowHandler()
@@ -38,23 +42,18 @@ async def get_service_handlers():
     global handlers
     handlers['mlflow'] = mlflow_handler
     logging.info('Retrieving mlflow handler {}'.format(mlflow_handler))
-    handlers['mlflow'].start_server()
-    logging.info('Started Mlflow server')
-
+    
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await get_service_handlers()
     logging.info('Updated global service handlers')
     yield
-    handlers['mlflow'].stop_server()
-    logging.info('Stopped the Mlflow server')
     handlers.clear()
     models.clear()
     logging.info('Released resources')
 
 app = FastAPI(lifespan=lifespan)
-
 
 @app.get('/health/', status_code=200)
 async def healthcheck():
@@ -71,8 +70,8 @@ async def get_model(store_id: str):
     global models
     model_name = MODEL_BASE_NAME + store_id
     if model_name not in models:
-        models[model_name] = handlers['mlflow'].get_production_model(
-            store_id=store_id)
+        models[model_name] = handlers['mlflow'].get_model_in_production(
+            model_name=model_name)
     return models[model_name]
 
 
@@ -102,10 +101,6 @@ async def return_foreast(forecast_request: List[Forecastrequest]):
 if __name__ == '__main__':
 
     import uvicorn
-    import time
-
-    # Wait a few seconds to make sure the mlflow instance is running
-    time.sleep(4)
 
     # Start the web application
     uvicorn.run(app, host='0.0.0.0', port=8000)

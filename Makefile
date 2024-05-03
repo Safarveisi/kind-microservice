@@ -26,12 +26,11 @@ $(COMMIT_DIR)/build-image: $(COMMIT_DIR)
 
 $(COMMIT_DIR)/deploy: $(COMMIT_DIR)
 	@read -p "Enter the image version: " version; \
-	export VERSION=$$version; \
-	envsubst < $(KUBE_DEPLOYMENT_FILE) | kubectl apply -f -; \
+	VERSION=$$version envsubst < $(KUBE_DEPLOYMENT_FILE) | kubectl apply -f -; \
 	touch $@
 
 $(COMMIT_DIR)/remove-deploy: $(COMMIT_DIR)
-	@envsubst < $(KUBE_DEPLOYMENT_FILE) | kubectl delete -f -; \
+	@kubectl delete -f $(KUBE_DEPLOYMENT_FILE); \
 	touch $@
 
 clean-docker-commit: $(COMMIT_DIR)

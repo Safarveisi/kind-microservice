@@ -1,10 +1,10 @@
 services:
   forecast:
-    image: ciaa/forecast-service:v0.1.0
+    image: docker.io/ciaa/fast-forecast:v0.1.0
     ports:
       - "8000:8000"
     environment:
-      MLFLOW_S3_PASSWORD_FILE: /run/secrets/mlflow_s3_password
+      MLFLOW_REQUIRED_ENVS: /run/secrets/mlflow_s3_password
     secrets:
       - mlflow_s3_password
 secrets:
