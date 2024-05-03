@@ -6,6 +6,7 @@ metadata:
 data:
   credentials.json: |
     {
+      "MLFLOW_TRACKING_URI": "${MLFLOW_TRACKING_URI}",
       "AWS_ACCESS_KEY_ID": "${AWS_ACCESS_KEY_ID}",
       "AWS_SECRET_ACCESS_KEY": "${AWS_SECRET_ACCESS_KEY}",
       "MLFLOW_S3_ENDPOINT_URL": "${MLFLOW_S3_ENDPOINT_URL}",
@@ -28,7 +29,7 @@ spec:
     spec:
       containers:
         - name: fast-api
-          image: ciaa/forecast-service:${VERSION}
+          image: ciaa/fast-forecast:${VERSION}
           resources:
             limits:
               memory: "1000Mi"
@@ -36,7 +37,7 @@ spec:
           ports:
             - containerPort: 8000
           env:
-            - name: MLFLOW_S3_PASSWORD_FILE
+            - name: MLFLOW_REQUIRED_ENVS
               value: /etc/config/credentials.json
           volumeMounts:
             - name: json-configmap-volume
@@ -44,7 +45,7 @@ spec:
       volumes:
         - name: json-configmap-volume
           configMap:
-            name: mlflow-s3-credentials      
+            name: mlflow-s3-credentials  
 ---
 apiVersion: v1
 kind: Service

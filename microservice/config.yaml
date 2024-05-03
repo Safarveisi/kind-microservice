@@ -1,5 +1,8 @@
 threshold:
   rmse: 2500.0
-mlflow:
-  artifactory_location: s3://customerintelligence/advanced-analytics/microservice/
-  backend_store: sqlite:///mlflow.db
+stores:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
