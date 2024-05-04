@@ -21,3 +21,4 @@ cluster to make the application scalable. An Ingress service is used as for the 
 ## Usage
 |File/Dir|Desc|
 |---|---|
+|commit-dir|Files created by targets in the Makefile are pushed here|
