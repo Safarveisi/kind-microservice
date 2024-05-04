@@ -17,3 +17,7 @@ cluster to make the application scalable. An Ingress service is used as for the 
 
 ## System
 ![ezcv logo](https://github.com/Safarveisi/microservice/blob/master/comps.png)
+
+## Usage
+|File/Dir|Desc|
+|---|---|
