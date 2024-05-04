@@ -19,6 +19,12 @@ cluster to make the application scalable. An Ingress service is used as for the 
 ![ezcv logo](https://github.com/Safarveisi/microservice/blob/master/comps.png)
 
 ## Usage
-|File/Dir|Desc|
-|---|---|
-|commit-dir|Files created by targets in the Makefile are pushed here|
+| **File/Dir** | **Desc** |
+| --- | --- |
+| `commit-dir` | Files created by targets in the Makefile are pushed here |
+| `microservice` | Source code for the app |
+| `Dockerfile` | Instructions to create the docker image of the app |
+| `Makefile` | Environment management and automation of the workflows |
+| `docker-compose.yaml` | Container orchestration |
+| `kind-cluster-configurations.yaml` | Configurations for the kind k8s cluster |
+| `kube-deploy.yaml` | Manifest to deploy the app in the kind cluster |
