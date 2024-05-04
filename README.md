@@ -13,7 +13,7 @@ Download the registered Prophet models (for each store id) from the Mlflow artif
 and make predictions for the requested store id and the time range. The web application can run on a kind kubernetes
 cluster (`kube-deploy.yaml`) or in a standalone docker container (`docker-compose.yaml`). In the former case, an ingress load balancer is used to communicate with the inference service from outside of the kind cluster. 
 
-To initialize the web application in the container, a few environment variables will be injected (through a configmap while deploying in a kind cluster or secrets otherwise) into the container upon deployment.   
+To initialize the web application in the container, a few environment variables will be injected (through a configmap while deploying in a kind cluster or secrets otherwise) into the container before starting the service.   
 
 ## System
 ![ezcv logo](https://github.com/Safarveisi/microservice/blob/master/comps.png)
