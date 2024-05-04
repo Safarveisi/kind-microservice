@@ -11,7 +11,7 @@ Use a remote Mlflow server for experiment tracking purposes and as a model regis
 ## Serve
 Download the registered Prophet models (for each store id) from the Mlflow artifactory location 
 and make predictions for the requested store id and the time range. The inference system can run on a kind kubernetes
-cluster (`kube-deploy.yaml`) or as a standalone container (`docker-compose.yaml`). In the former case, an ingress load balancer is used to communicate with the inference service from outside of the kind cluster. 
+cluster (`kube-deploy.yaml`) or as a standalone docker container (`docker-compose.yaml`). In the former case, an ingress load balancer is used to communicate with the inference service from outside of the kind cluster. 
 
 ## System
 ![ezcv logo](https://github.com/Safarveisi/microservice/blob/master/comps.png)
