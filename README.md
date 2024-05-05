@@ -111,7 +111,7 @@ Download the registered Prophet models (for each store id) from the Mlflow artif
 and make predictions for the requested store id and the time range. The web application can run on a kind kubernetes
 cluster (`kube-deploy.yaml`) or in a standalone docker container (`docker-compose.yaml`). In the former case, an ingress load balancer is used to communicate with the inference service from outside of the cluster. 
 
-To initialize the web application in the container, a few environment variables will be injected (through a configmap while deploying in a kind cluster or via secrets, otherwise) into the container before starting the service.   
+To initialize the web application in the container, a few environment variables will be injected (through a configmap in `kube-deploy.yaml` while deploying in a kind cluster or via secrets in `docker-compose.yaml`) into the container before starting the service.
 
 ## Usage
 | **File/Dir** | **Desc** |
@@ -120,9 +120,28 @@ To initialize the web application in the container, a few environment variables 
 | `microservice` | Source code for the app |
 | `Dockerfile` | Instructions to create the docker image of the app |
 | `Makefile` | Environment management and automation of the workflows |
-| `docker-compose.yaml` | Container orchestration (*) |
-| `kind-cluster-configurations.yaml` | Configurations for the kind k8s cluster (**) |
+| `docker-compose.yaml` | Container orchestration (1) |
+| `kind-cluster-configurations.yaml` | Configurations for the kind k8s cluster (2) |
 | `kube-deploy.yaml` | Manifest to deploy the app in the kind cluster |
+
+(1) 
+
+```bash
+docker compose up
+```
+Make sure you have the `credentials.json` in the project root directoy. Please see the configmap in `kube-deploy.yaml` to learn about the content of the json file.
+
+(2) 
+
+```bash
+envsubst < kube-deploy.yaml | kubectl apply -f -
+```
+
+Make sure you have already defined the environment variables in the configmap (e.g., `${MLFLOW_TRACKING_URI}`). The command `envsubst` takes `kube-deploy.yaml` and generates another yaml file with all ${env} replaced with their values. You can see the status of your deployment via [k9s](https://k9scli.io/). You can now run the following in the command line:
+
+```bash
+kubectl port-forward service/fast-api-service 8000:8000
+```
 
 ## Inference Service Component Graph
 <p align="center"><img alt="kind" src="./logo/comps.png" width="800px" height="600px" /></p>
