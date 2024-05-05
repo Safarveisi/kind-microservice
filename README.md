@@ -121,8 +121,8 @@ To initialize the web application in the container, a few environment variables 
 | `Dockerfile` | Instructions to create the docker image of the app |
 | `Makefile` | Environment management and automation of the workflows |
 | `docker-compose.yaml` | Container orchestration (1) <br> This is the **first option** to start the service|
-| `kind-cluster-configurations.yaml` | Configurations for the kind k8s cluster (2) <br> This is the **second option** to start the service|
-| `kube-deploy.yaml` | Manifest to deploy the app in the kind cluster |
+| `kind-cluster-configurations.yaml` | Configurations for the kind k8s cluster |
+| `kube-deploy.yaml` | Manifest to deploy the app in the kind cluster (2) <br> This is the **second option** to start the service |
 
 (1) 
 
