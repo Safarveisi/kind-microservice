@@ -98,7 +98,7 @@ When there is no model with `stage = production` for a store id (e.g., the rmse 
 | **API endpoint** | **Type** | **Desc** |
 | --- | --- | --- |
 | localhost:8000/forecast/ | Post | Forecasting requests for selected stored ids <br> and time ranges (see example above) |
-| localhost:8000/health/ | Get | Checks if the mlflow server is operaional |
+| localhost:8000/health/ | Get | Checks if the mlflow server is operational |
 
 ## Training
 Train 5 different time-series models (based on [prophet](https://pypi.org/project/prophet/)) using a kaggle dataset (`microservice/train_forecasters_ray.py`) and put the models stage to `production` if the root-mean-square-error (rmse) is `<=` the threshold set in `microservice/config.yaml`. To get the dataset, we will use the kaggle python package. 
