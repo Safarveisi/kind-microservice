@@ -120,9 +120,9 @@ To initialize the web application in the container, a few environment variables 
 | `microservice` | Source code for the app |
 | `Dockerfile` | Instructions to create the docker image of the app |
 | `Makefile` | Environment management and automation of the workflows |
-| `docker-compose.yaml` | Container orchestration |
-| `kind-cluster-configurations.yaml` | Configurations for the kind k8s cluster |
+| `docker-compose.yaml` | Container orchestration (*) |
+| `kind-cluster-configurations.yaml` | Configurations for the kind k8s cluster (**) |
 | `kube-deploy.yaml` | Manifest to deploy the app in the kind cluster |
 
 ## Inference Service Component Graph
-![ezcv logo](https://github.com/Safarveisi/microservice/blob/master/comps.png)
+<p align="center"><img alt="kind" src="./logo/comps.png" width="300px" /></p>
