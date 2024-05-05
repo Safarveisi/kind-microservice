@@ -95,7 +95,7 @@ Response:
 When there is no model with `stage = production` for a store id (e.g., the rmse of the prophet model was too high during the train), then the `forecast` field will take a string value (`Forecase is not possible for this store id at the moment`)
 
 ## Training
-Train 5 different time-series models (based on [prophet](https://pypi.org/project/prophet/)) using a kaggle dataset (`microservice/train_forecasters_ray.py`) and put the models stage to `production` if the root-mean-square-error (rmse) is `<=` the threshold set in microservice/config.yaml. To get the dataset, we will use the kaggle python package. 
+Train 5 different time-series models (based on [prophet](https://pypi.org/project/prophet/)) using a kaggle dataset (`microservice/train_forecasters_ray.py`) and put the models stage to `production` if the root-mean-square-error (rmse) is `<=` the threshold set in `microservice/config.yaml`. To get the dataset, we will use the kaggle python package. 
 
 ## Experiment tracking and model registery
 Use a remote Mlflow server for experiment tracking purposes and as a model registery (s3 backend).  
