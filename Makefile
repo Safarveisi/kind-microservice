@@ -1,6 +1,6 @@
 KUBE_DEPLOYMENT_FILE := kube-deploy.yaml
 KUBE_CONFIG_PATH := $(HOME)/.kube/config
-COMMIT_DIR := commit-dir
+TARGET_DIR := target-dir
 
 .DEFAULT_GOAL := help
 
@@ -8,38 +8,38 @@ help:
 	@echo "Available targets: "
 	@echo "	help	Display this help message"
 	@echo "	kube-config	Path to the kubernetes config file"
-	@echo "	$(COMMIT_DIR)/build-image	Build the latest Docker image"
-	@echo "	$(COMMIT_DIR)/deploy	Deploy the service (manifest: $(KUBE_DEPLOYMENT_FILE))"
-	@echo "	$(COMMIT_DIR)/remove-deploy	Remove the deployment (manifest: $(KUBE_DEPLOYMENT_FILE))"
-	@echo "	$(COMMIT_DIR)	Create $(COMMIT_DIR) directory to which commit files are pushed"
-	@echo "	clean-kube-commit	Remove all kubernetes commit files from $(COMMIT_DIR)"
-	@echo "	clean-docker-commit	Remove all docker commit files from $(COMMIT_DIR)"
+	@echo "	$(TARGET_DIR)/build-image	Build the latest Docker image"
+	@echo "	$(TARGET_DIR)/deploy	Deploy the service (manifest: $(KUBE_DEPLOYMENT_FILE))"
+	@echo "	$(TARGET_DIR)/remove-deploy	Remove the deployment (manifest: $(KUBE_DEPLOYMENT_FILE))"
+	@echo "	$(TARGET_DIR)	Create $(TARGET_DIR) directory to which commit files are pushed"
+	@echo "	clean-kube-commit	Remove all kubernetes commit files from $(TARGET_DIR)"
+	@echo "	clean-docker-commit	Remove all docker commit files from $(TARGET_DIR)"
 
 kube-config:
 	@echo "Kubeconfig path: $(KUBE_CONFIG_PATH)"
 
-$(COMMIT_DIR)/build-image: $(COMMIT_DIR)
+$(TARGET_DIR)/build-image: $(TARGET_DIR)
 	@read -p "Enter the version for the image: " version; \
 	docker build -t ciaa/forecast-service:$$version .; \
 	docker push ciaa/forecast-service:$$version; \
 	touch $@
 
-$(COMMIT_DIR)/deploy: $(COMMIT_DIR)
+$(TARGET_DIR)/deploy: $(TARGET_DIR)
 	@read -p "Enter the image version: " version; \
 	VERSION=$$version envsubst < $(KUBE_DEPLOYMENT_FILE) | kubectl apply -f -; \
 	touch $@
 
-$(COMMIT_DIR)/remove-deploy: $(COMMIT_DIR)
+$(TARGET_DIR)/remove-deploy: $(TARGET_DIR)
 	@kubectl delete -f $(KUBE_DEPLOYMENT_FILE); \
 	touch $@
 
-clean-docker-commit: $(COMMIT_DIR)
+clean-docker-commit: $(TARGET_DIR)
 	@rm -f $</build-image
 
-clean-kube-commit: $(COMMIT_DIR)
+clean-kube-commit: $(TARGET_DIR)
 	@rm -f $</deploy $</remove-deploy
 
-$(COMMIT_DIR): 
+$(TARGET_DIR): 
 	@if [ ! -d "$@" ]; then \
 		mkdir -p "$@"; \
 		echo "Directory created: $@"; \
