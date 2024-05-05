@@ -137,7 +137,7 @@ Make sure you have the `credentials.json` in the project root directoy. Please s
 envsubst < kube-deploy.yaml | kubectl apply -f -
 ```
 
-Make sure you have already defined the environment variables in the configmap (e.g., `${MLFLOW_TRACKING_URI}`). The command `envsubst` takes `kube-deploy.yaml` and generates another yaml file with all ${env} replaced with their values. You can see the status of your deployment via [k9s](https://k9scli.io/). You can now run the following in the command line:
+Make sure you have already defined the environment variables in the configmap (e.g., `${MLFLOW_TRACKING_URI}`). The command `envsubst` takes `kube-deploy.yaml` and generates another yaml file with all `${env}` replaced with their values. You can see the status of your deployment via [k9s](https://k9scli.io/). You can now run the following in the command line:
 
 ```bash
 kubectl port-forward service/fast-api-service 8000:8000
