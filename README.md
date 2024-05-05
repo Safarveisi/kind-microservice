@@ -125,4 +125,4 @@ To initialize the web application in the container, a few environment variables 
 | `kube-deploy.yaml` | Manifest to deploy the app in the kind cluster |
 
 ## Inference Service Component Graph
-<p align="center"><img alt="kind" src="./logo/comps.png" width="600px" height="800px" /></p>
+<p align="center"><img alt="kind" src="./logo/comps.png" width="800px" height="600px" /></p>
