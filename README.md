@@ -97,7 +97,7 @@ When there is no model with `stage = production` for a store id (e.g., the rmse 
 
 | **API endpoint** | **Type** | **Desc** |
 | --- | --- | --- |
-| localhost:8000/forecast/ | Post | Forecasting requests for selected stored ids and their time ranges |
+| localhost:8000/forecast/ | Post | Forecasting requests for selected stored ids <br> and time ranges (see example above) |
 | localhost:8000/health/ | Get | Checks if the mlflow server is operaional |
 
 ## Training
