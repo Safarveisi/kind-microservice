@@ -1,6 +1,6 @@
 # Service
 A web applciation (powered by fast api) that receives forecasting requests for different time ranges and for five 
-different store ids. The request body (post) and its response follow the following schema
+different store ids. Example of a request body (post) and its response:
 
 Request (post):
 
